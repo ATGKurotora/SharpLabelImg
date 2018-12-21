@@ -33,6 +33,9 @@ public:
     QPushButton *prevButton;
     QLabel *imgLabel;
     QPushButton *nextButton;
+    QHBoxLayout *horizontalLayout_2;
+    QLineEdit *saveLineEdit;
+    QPushButton *saveButton;
 
     void setupUi(QMainWindow *MyLabelImgClass)
     {
@@ -85,6 +88,22 @@ public:
 
         verticalLayout->addLayout(horizontalLayout);
 
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        saveLineEdit = new QLineEdit(centralWidget);
+        saveLineEdit->setObjectName(QStringLiteral("saveLineEdit"));
+
+        horizontalLayout_2->addWidget(saveLineEdit);
+
+        saveButton = new QPushButton(centralWidget);
+        saveButton->setObjectName(QStringLiteral("saveButton"));
+
+        horizontalLayout_2->addWidget(saveButton);
+
+
+        verticalLayout->addLayout(horizontalLayout_2);
+
         MyLabelImgClass->setCentralWidget(centralWidget);
 
         retranslateUi(MyLabelImgClass);
@@ -105,6 +124,7 @@ public:
 #ifndef QT_NO_SHORTCUT
         nextButton->setShortcut(QApplication::translate("MyLabelImgClass", "Right", nullptr));
 #endif // QT_NO_SHORTCUT
+        saveButton->setText(QApplication::translate("MyLabelImgClass", "save", nullptr));
     } // retranslateUi
 
 };

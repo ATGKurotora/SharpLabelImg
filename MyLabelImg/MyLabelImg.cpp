@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QPixmap>
 #include "MyLabelImg.h"
+#include "MyFile.h"
 
 MyLabelImg::MyLabelImg(QWidget *parent)
 	: QMainWindow(parent),
@@ -13,6 +14,7 @@ MyLabelImg::MyLabelImg(QWidget *parent)
 	connect(ui.browseButton, &QPushButton::clicked, this, &MyLabelImg::browseImg);
 	connect(ui.prevButton, &QPushButton::clicked, this, &MyLabelImg::previousImg);
 	connect(ui.nextButton, &QPushButton::clicked, this, &MyLabelImg::nextImg);
+	connect(ui.saveButton, &QPushButton::clicked, this, &MyLabelImg::saveImg);
 }
 
 MyLabelImg::~MyLabelImg()
@@ -51,6 +53,41 @@ void	MyLabelImg::nextImg()
 		imgPtr = imgPtr + 1;
 		refreshImg();
 	}
+}
+
+void	MyLabelImg::saveImg()
+{
+	QString saveDirString = ui.saveLineEdit->text();
+	if (saveDirString.isEmpty() || !QDir(saveDirString).exists())
+	{
+		saveDirString = QFileDialog::getExistingDirectory(this, tr("Open directory"), "/home", QFileDialog::ShowDirsOnly);
+		ui.saveLineEdit->setText(saveDirString);
+	}
+		
+	MyFile	file;
+
+	if (!QDir(saveDirString + "/img").exists())
+		QDir().mkdir(saveDirString + "/img");
+	if (!QDir(saveDirString + "/data").exists())
+		QDir().mkdir(saveDirString + "/data");
+
+	if (myImage.getAbsolutePath().endsWith(".png"))
+	{
+		QFile::rename(myImage.getAbsolutePath(), saveDirString + "/img/" + QString::number(imgPtr) + ".png");
+		listImg[imgPtr].setAbsolutePath(saveDirString + "/img/" + QString::number(imgPtr) + ".png");
+	}
+	else if (myImage.getAbsolutePath().endsWith(".jpg"))
+	{
+		QFile::rename(myImage.getAbsolutePath(), saveDirString + "/img/" + QString::number(imgPtr) + ".jpg");
+		listImg[imgPtr].setAbsolutePath(saveDirString + "/img/" + QString::number(imgPtr) + ".jpg");
+	}
+	else
+	{
+		QFile::rename(myImage.getAbsolutePath(), saveDirString + "/img/" + QString::number(imgPtr) + ".jpeg");
+		listImg[imgPtr].setAbsolutePath(saveDirString + "/img/" + QString::number(imgPtr) + ".jpeg");
+	}
+	refreshImg();
+	file.saveData(myImage, saveDirString + "/data/" + QString::number(imgPtr) + ".xml");
 }
 
 void	MyLabelImg::refreshImg()

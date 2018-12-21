@@ -17,7 +17,7 @@ public:
 	QVector<LabelInfo>	getLabelInfo();
 
 private:
-	QString				absolutePath;
+	QString				_absolutePath;
 	QVector<LabelInfo>	listLabelInfo;
 };
 

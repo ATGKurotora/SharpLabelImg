@@ -48,7 +48,7 @@ QString	MyFile::getStrData(MyImg img)
 	ret = "<annotation>\n\t";
 	ret += "<folder>img</folder>\n\t";
 	ret += "<filename>" + img.getAbsolutePath().split("/").at(img.getAbsolutePath().split("/").size() - 1) + "</filename>\n\t";
-	ret += "<path>../data/" + img.getAbsolutePath().split("/").at(img.getAbsolutePath().split("/").size() - 1) + "</path>\n\t";
+	ret += "<path>../img/" + img.getAbsolutePath().split("/").at(img.getAbsolutePath().split("/").size() - 1) + "</path>\n\t";
 	ret += "<source>\n\t\t";
 	ret += "<database>Unknwon</database>\n\t";
 	ret += "</source>\n\t";

@@ -15,9 +15,9 @@ public:
 
 public slots:
 	void	browseImg();
-	void	searchImg();
 	void	previousImg();
 	void	nextImg();
+	void	saveImg();
 
 private:
 	Ui::MyLabelImgClass ui;
