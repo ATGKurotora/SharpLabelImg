@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MyImage.h"
+#include "MyImg.h"
 #include <QString>
 
 class MyFile
@@ -8,12 +8,16 @@ class MyFile
 public:
 	MyFile();
 	~MyFile();
-	void	saveData(MyImage img);
-	void	saveData(MyImage img, QString absolutePath);
+	void	saveData(MyImg img);
+	void	saveData(MyImg img, QString absolutePath);
 	void	setAbsolutePath(QString absolutePath);
 	QString	getAbsolutePath();
 	
 private:
-	QString	absolutePath;
+	QString getStrLabData(MyImg img);
+	QString	getStrData(MyImg img);
+
+private:
+	QString	_absolutePath;
 };
 
