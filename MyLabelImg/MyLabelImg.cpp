@@ -8,13 +8,17 @@
 
 MyLabelImg::MyLabelImg(QWidget *parent)
 	: QMainWindow(parent),
-	imgPtr(0)
+	imgPtr(0), myLabel("")
 {
 	ui.setupUi(this);
 	connect(ui.browseButton, &QPushButton::clicked, this, &MyLabelImg::browseImg);
 	connect(ui.prevButton, &QPushButton::clicked, this, &MyLabelImg::previousImg);
 	connect(ui.nextButton, &QPushButton::clicked, this, &MyLabelImg::nextImg);
 	connect(ui.saveButton, &QPushButton::clicked, this, &MyLabelImg::saveImg);
+	connect(ui.useLabelButton, &QPushButton::clicked, this, &MyLabelImg::saveLabel);
+	connect(ui.imgLabel, SIGNAL(Mouse_Moved()), this, SLOT(MouseMoved()));
+	connect(ui.imgLabel, SIGNAL(Mouse_Pressed()), this, SLOT(MousePressed()));
+	connect(ui.imgLabel, SIGNAL(Mouse_Left()), this, SLOT(MouseLeft()));
 }
 
 MyLabelImg::~MyLabelImg()
@@ -90,11 +94,33 @@ void	MyLabelImg::saveImg()
 	file.saveData(myImage, saveDirString + "/data/" + QString::number(imgPtr) + ".xml");
 }
 
+void	MyLabelImg::saveLabel()
+{
+	myLabel = this->ui.nameLabelLineEdit->text();
+}
+
 void	MyLabelImg::refreshImg()
 {
 	if (!this->listImg.isEmpty())
 	{
 		myImage = listImg.at(imgPtr);
-		ui.imgLabel->setPixmap(myImage.loadPixmap().scaled(1000, 1000, Qt::KeepAspectRatio));
+		ui.imgLabel->setPixmap(myImage.loadPixmap()/*.scaled(1000, 1000, Qt::KeepAspectRatio)*/);
 	}
+}
+
+void	MyLabelImg::MouseMoved()
+{
+	ui.nameLabel->setText(QString("X:%1 Y:%2")
+		.arg(ui.imgLabel->getX())
+		.arg(ui.imgLabel->getY()));
+}
+
+void	MyLabelImg::MousePressed()
+{
+	ui.nameLabel->setText(QString("Mouse clicked"));
+}
+
+void	MyLabelImg::MouseLeft()
+{
+	ui.nameLabel->setText(QString("Mouse left"));
 }
