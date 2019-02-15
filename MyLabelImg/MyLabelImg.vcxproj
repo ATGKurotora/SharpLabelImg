@@ -113,7 +113,10 @@
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Canevas.cpp" />
+    <ClCompile Include="LabelButton.cpp" />
     <ClCompile Include="LabelInfo.cpp" />
+    <ClCompile Include="ListLabelButton.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyFile.cpp" />
     <ClCompile Include="MyImg.cpp" />
@@ -130,8 +133,11 @@
     <QtRcc Include="MyLabelImg.qrc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Canevas.h" />
     <ClInclude Include="Data.h" />
+    <ClInclude Include="LabelButton.h" />
     <ClInclude Include="LabelInfo.h" />
+    <ClInclude Include="ListLabelButton.h" />
     <ClInclude Include="MyFile.h" />
     <ClInclude Include="MyImg.h" />
     <QtMoc Include="MyQLabel.h">

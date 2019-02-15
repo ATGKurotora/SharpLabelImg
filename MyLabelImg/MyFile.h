@@ -8,16 +8,21 @@ class MyFile
 public:
 	MyFile();
 	~MyFile();
-	void	saveData(MyImg img);
-	void	saveData(MyImg img, QString absolutePath);
-	void	setAbsolutePath(QString absolutePath);
-	QString	getAbsolutePath();
+	void		saveMyImg(MyImg&);
+	void		setMyImgFolderPath(QString);
+	QString		getMyImgFolderPath();
+	QStringList	getImgFileList(QString);
 	
 private:
-	QString getStrLabData(MyImg img);
-	QString	getStrData(MyImg img);
+	void		saveData(MyImg);
+	void		checkAndCreateFolder();
+	void		changeImgAndDataPath(MyImg&);
+	QString		getStrLabData(MyImg);
+	QString		getStrData(MyImg);
+	QString		getImgExt(MyImg);
+	int			getNumImg();
 
 private:
-	QString	_absolutePath;
+	QString		myImgFolderPath;
 };
 

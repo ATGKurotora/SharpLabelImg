@@ -19,11 +19,6 @@ void MyQLabel::mousePressEvent(QMouseEvent *ev)
 	emit Mouse_Pressed();
 }
 
-void MyQLabel::leaveEvent(QEvent *)
-{
-	emit Mouse_Left();
-}
-
 int MyQLabel::getX()
 {
 	return x;

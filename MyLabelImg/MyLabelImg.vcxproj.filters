@@ -48,6 +48,15 @@
     <ClCompile Include="MyQLabel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LabelButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ListLabelButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Canevas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="MyLabelImg.h">
@@ -78,6 +87,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MyFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LabelButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ListLabelButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Canevas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

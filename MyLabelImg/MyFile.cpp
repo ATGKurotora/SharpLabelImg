@@ -5,7 +5,7 @@
 #include <QTextStream>
 #include <QMessagebox>
 
-MyFile::MyFile() : _absolutePath("")
+MyFile::MyFile() : myImgFolderPath("")
 {
 }
 
@@ -13,7 +13,38 @@ MyFile::~MyFile()
 {
 }
 
-QString	MyFile::getStrLabData(MyImg img)
+void		MyFile::saveData(MyImg img)
+{
+	QFile myFile(img.getMyDataPath());
+
+	if (myFile.open(QIODevice::ReadWrite)) {
+		QTextStream stream(&myFile);
+		stream << getStrData(img) << endl;
+		myFile.close();
+	}
+}
+
+void		MyFile::checkAndCreateFolder()
+{
+	if (!QDir(myImgFolderPath + "/img").exists())
+		QDir().mkdir(myImgFolderPath + "/img");
+	if (!QDir(myImgFolderPath + "/data").exists())
+		QDir().mkdir(myImgFolderPath + "/data");
+}
+
+void		MyFile::changeImgAndDataPath(MyImg &img)
+{
+	QString imgPath = myImgFolderPath + "/img/";
+	QString dataPath = myImgFolderPath + "/data/";
+	QString nbFile = QString::number(getNumImg());
+	QString imgExt = getImgExt(img);
+
+	QFile::rename(img.getMyImgPath(), imgPath + nbFile + imgExt);
+	img.setMyImgPath(imgPath + nbFile + imgExt);
+	img.setMyDataPath(dataPath + nbFile + ".xml");
+}
+
+QString		MyFile::getStrLabData(MyImg img)
 {
 	int i = 0;
 	QVector<LabelInfo>	labInfs = img.getLabelInfo();
@@ -41,14 +72,14 @@ QString	MyFile::getStrLabData(MyImg img)
 	return ret;
 }
 
-QString	MyFile::getStrData(MyImg img)
+QString		MyFile::getStrData(MyImg img)
 {
 	QString ret = "";
 
 	ret = "<annotation>\n\t";
 	ret += "<folder>img</folder>\n\t";
-	ret += "<filename>" + img.getAbsolutePath().split("/").at(img.getAbsolutePath().split("/").size() - 1) + "</filename>\n\t";
-	ret += "<path>../img/" + img.getAbsolutePath().split("/").at(img.getAbsolutePath().split("/").size() - 1) + "</path>\n\t";
+	ret += "<filename>" + img.getMyImgPath().split("/").at(img.getMyImgPath().split("/").size() - 1) + "</filename>\n\t";
+	ret += "<path>../img/" + img.getMyImgPath().split("/").at(img.getMyImgPath().split("/").size() - 1) + "</path>\n\t";
 	ret += "<source>\n\t\t";
 	ret += "<database>Unknwon</database>\n\t";
 	ret += "</source>\n\t";
@@ -64,19 +95,45 @@ QString	MyFile::getStrData(MyImg img)
 	return ret;
 }
 
-void	MyFile::saveData(MyImg img)
+QString		MyFile::getImgExt(MyImg img)
 {
-	if (!_absolutePath.isEmpty())
-	{
-		QFile myFile(_absolutePath);
+	QString ret = img.getMyImgPath();
 
-		if (myFile.open(QIODevice::ReadWrite)) {
-			QTextStream stream(&myFile);
-			stream << getStrData(img) << endl;
-			myFile.close();
-		}
+	ret = "." + ret.split(".").back();
+
+	return ret;
+}
+
+int			MyFile::getNumImg()
+{
+	int		ret = 0;
+	int		i = 0;
+	bool	ok;
+	QStringList imgFileList = getImgFileList(myImgFolderPath + "/img");
+
+	for each (QString imgFile in imgFileList)
+	{
+		i = imgFile.split('.').at(0).toInt(&ok);
+		if (ok == true && i >= ret)
+			ret = i + 1;
 	}
-	else 
+
+	return ret;
+}
+
+void		MyFile::saveMyImg(MyImg &img)
+{
+	if (!myImgFolderPath.isEmpty())
+	{
+		checkAndCreateFolder();
+		if (img.getMyDataPath().isEmpty() ||
+			!QFile(img.getMyDataPath()).exists())
+			changeImgAndDataPath(img);
+		if (QFile(img.getMyDataPath()).exists())
+			QFile(img.getMyDataPath()).remove();
+		saveData(img);
+	}
+	else
 	{
 		QMessageBox msgBox;
 		msgBox.setText("Unable to save data");
@@ -85,18 +142,22 @@ void	MyFile::saveData(MyImg img)
 	}
 }
 
-void	MyFile::saveData(MyImg img, QString absolutePath)
+void		MyFile::setMyImgFolderPath(QString imgFolderPath)
 {
-	setAbsolutePath(absolutePath);
-	saveData(img);
+	myImgFolderPath = imgFolderPath;
 }
 
-void	MyFile::setAbsolutePath(QString absolutePath)
+QString		MyFile::getMyImgFolderPath()
 {
-	_absolutePath = absolutePath;
+	return myImgFolderPath;
 }
 
-QString	MyFile::getAbsolutePath()
+QStringList	MyFile::getImgFileList(QString imgDirStr)
 {
-	return _absolutePath;
+	QDir imgDir = QDir(imgDirStr);
+	QStringList	filtersName;
+	filtersName << "*.png" << "*.jpg" << "*.jpeg";
+	QStringList imgFileList = imgDir.entryList(filtersName, QDir::Files, QDir::Name);
+
+	return imgFileList;
 }

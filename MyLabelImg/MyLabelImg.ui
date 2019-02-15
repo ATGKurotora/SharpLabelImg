@@ -16,11 +16,24 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="8,1">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,10,1">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <layout class="QHBoxLayout" name="hLBrowse" stretch="1,0">
         <item>
-         <widget class="QLineEdit" name="browseLineEdit"/>
+         <widget class="QLabel" name="browseLabel">
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Images from:</string>
+          </property>
+          <property name="margin">
+           <number>10</number>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="browseButton">
@@ -32,7 +45,7 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,5,1">
+       <layout class="QHBoxLayout" name="hLMain" stretch="1,5,1">
         <item>
          <widget class="QPushButton" name="prevButton">
           <property name="text">
@@ -59,14 +72,14 @@
            <string>next</string>
           </property>
           <property name="shortcut">
-           <string>Right</string>
+           <string>D</string>
           </property>
          </widget>
         </item>
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QHBoxLayout" name="hLSave">
         <item>
          <widget class="QLineEdit" name="saveLineEdit"/>
         </item>
@@ -82,7 +95,7 @@
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="vLLabel">
       <item>
        <spacer name="verticalSpacer_2">
         <property name="orientation">
@@ -99,7 +112,7 @@
       <item>
        <widget class="QLabel" name="nameLabel">
         <property name="text">
-         <string>label:</string>
+         <string>actual label: none</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -107,7 +120,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="nameLabelLineEdit"/>
+       <widget class="QLineEdit" name="nameLabelLineEdit">
+        <property name="clearButtonEnabled">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="useLabelButton">
@@ -115,6 +132,9 @@
          <string>use</string>
         </property>
        </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="vLListLabel"/>
       </item>
       <item>
        <spacer name="verticalSpacer">

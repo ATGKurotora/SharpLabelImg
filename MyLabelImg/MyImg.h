@@ -1,6 +1,6 @@
 #pragma once
-#include "Data.h"
 #include "LabelInfo.h"
+#include "Canevas.h"
 #include <QPixmap>
 
 class MyImg
@@ -8,16 +8,30 @@ class MyImg
 public:
 	MyImg();
 	~MyImg();
-	MyImg				&operator=(const MyImg& other);
-	void				setAbsolutePath(QString absolutePath);
-	void				setLabelList(QVector<LabelInfo> labelList);
-	QPixmap				&loadPixmap();
+	MyImg				&operator=(const MyImg&);
+	void				setMyImgPath(QString);
+	void				setMyDataPath(QString);
+	void				addLabelInfo(LabelInfo);
+	void				removeLastLabelInfo();
+	QPixmap				&getCurrentPixmap();
 	xyInt				getSize();
-	QString				getAbsolutePath();
+	QString				getMyImgPath();
+	QString				getMyDataPath();
 	QVector<LabelInfo>	getLabelInfo();
+	xyInt				getMyFirstPointI();
+	void				setMyFirstPointI(xyInt, QColor);
+	xyInt				getMySecondPointI();
+	void				setMySecondPointI(xyInt);
+	void				setMyTmpPointI(xyInt);
+	int					getCurrentPixmapIdI();
+	void				removePixmapI(int);
+	bool				getWaitingSecondPointI();
+	void				setWaitingSecondPointI(bool);
 
 private:
-	QString				_absolutePath;
+	QString				myImgPath;
+	QString				myDataPath;
 	QVector<LabelInfo>	listLabelInfo;
+	Canevas				myCanevas;
 };
 

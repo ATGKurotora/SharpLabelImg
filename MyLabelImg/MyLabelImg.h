@@ -1,9 +1,11 @@
 #pragma once
 
-#include "MyImg.h"
+#include "MyFile.h"
 #include "MyQLabel.h"
+#include "ListLabelButton.h"
 #include <QtWidgets/QMainWindow>
 #include <QDir>
+#include <QSignalMapper>
 #include "ui_MyLabelImg.h"
 
 class MyLabelImg : public QMainWindow
@@ -15,24 +17,31 @@ public:
 	virtual ~MyLabelImg();
 
 public slots:
-	void	browseImg();
-	void	previousImg();
-	void	nextImg();
-	void	saveImg();
-	void	saveLabel();
+	void				browseImg();
+	void				previousImg();
+	void				nextImg();
+	void				saveImgButton();
+	void				saveLabel();
 
 private slots:
-	void	MouseMoved();
-	void	MousePressed();
-	void	MouseLeft();
+	void				MouseMoved();
+	void				MousePressed();
+	void				selectCurrentLabel(QString);
 
 private:
 	Ui::MyLabelImgClass ui;
 	int					imgPtr;
+	QString				myCurrentLabel;
+	QColor				myCurrentColor;
 	QVector<MyImg>		listImg;
-	MyImg				myImage;
-	QString				myLabel;
+	MyFile				myFile;
+	ListLabelButton		myListLabelButton;
+	QSignalMapper		*mySignalMapper;
 
 private:
+	void				saveImg();
 	void				refreshImg();
+	void				refreshListLabelButton();
+	void				clearLayout(QLayout *);
+	xyInt				getTrueCoordinate(xyInt);
 };
